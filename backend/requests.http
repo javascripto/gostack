@@ -1,0 +1,34 @@
+GET http://localhost:3333/
+
+### 
+
+GET http://localhost:3333/projects
+
+###
+
+POST http://localhost:3333/projects
+Content-Type: application/json
+
+{
+  "owner": "",
+  "title": ""
+}
+
+###
+
+GET http://localhost:3333/projects/123
+
+
+###
+
+PUT http://localhost:3333/projects/123
+Content-Type: application/json
+
+{
+  "owner": "",
+  "title": ""
+}
+
+###
+
+DELETE http://localhost:3333/projects/123
