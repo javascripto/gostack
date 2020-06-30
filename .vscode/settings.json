@@ -1,4 +1,7 @@
 {
   "emmet.syntaxProfiles": { "javascript": "jsx" },
   "emmet.includeLanguages": { "javascript": "javascriptreact" },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }
