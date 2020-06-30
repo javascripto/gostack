@@ -9,3 +9,7 @@ Content-Type: application/json
   "provider": "Yuri Alves",
   "date": "{{$datetime iso8601}}"
 }
+
+###
+
+GET {{baseURL}}/appointments
