@@ -1,7 +1,11 @@
-POST http://localhost:3333/
+@baseURL = http://localhost:3333
+
+###
+
+POST {{baseURL}}/appointments
 Content-Type: application/json
 
 {
-  "name": "Fulano",
-  "email": "fulano@mail.com"
+  "provider": "Yuri Alves",
+  "date": "{{$datetime iso8601}}"
 }
