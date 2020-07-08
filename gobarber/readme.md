@@ -79,3 +79,154 @@ O fluxo da criação de um novo agendamento fica da seguinte forma:
 
 - `SRP` - Single Responsability Principle (SOLID) - Principio da Responsabilidade única
 - `DIP` - Dependency Inversion Principle (SOLID) - Principio da Inversão de Dependência
+
+
+## Docker
+
+## Definições
+
+- Imagem: Sistema/Software/Pacote modelo como base
+- Container: instancia de uma imagem
+- Docker Registry (Docker Hub)
+- DockerFile: receita de uma imagem
+- Instalação: https://www.notion.so/Instalando-Docker-6290d9994b0b4555a153576a1d97bee2
+
+### Exemplo de um DockerFile
+
+```DockerFile
+# Partimos de uma imagem existente
+FROM node:10
+
+# Definimos a pasta de trabalho e copiamos os arquivos
+WORKDIR /usr/app
+COPY . ./
+
+# Instalamos as dependencias
+RUN yarn
+
+# Qual porta queremos expor?
+EXPOSE 3333
+
+# Executamos nossa aplicação
+CMD yarn start
+```
+
+### TODO
+
+- [ ] Pesquisar sobre docker nativo do windows nas novas versões
+
+### Rodando uma imagem postgres
+
+- Porta do postgres: 5432
+- Verificar execução da porta: lsof -i | grep 5432
+- Comando:
+
+  ```sh
+  docker run \
+    --name gostack_postgres \
+    -e POSTGRES_PASSWORD=docker \
+    -p 5432:5432 \
+    -d postgres
+  ```
+
+#### Parametros:
+
+- `--name`: apelido_dado_localmente
+- `-e`: Variavel de ambiente
+- `-p`: porta_da_maquina:porta_do_container
+- `-d`: nome da imagem
+
+### Alguns comandos do docker
+
+- Listando containers: `docker ps`
+- Listando todos containers: `docker ps -a`
+- Ver saida de logs de um container: `docker logs bf44c1cd8d78`
+- Parando container: `docker stop bf44c1cd8d78`
+- Iniciando container por nome ou id: `docker start gostack_postgres`
+
+
+### Outros detalhes
+
+- Usuario padrão: postgres
+- Senha configurada das variaveis de ambiente: docker
+- Clientes sugeridos: dbeaver, postbird, navicat, sequelpro, heidisql
+- Cheat sheet: https://www.postgresqltutorial.com/postgresql-cheat-sheet/
+
+## TypeORM
+
+- NPM Script do typeorm typescript: `ts-node-dev ./node_modules/typeorm/cli.js`
+- Criando migration: `yarn typeorm migration:create -n CreateAppointments`
+- Rodando migration: `yarn typeorm migration:run`
+- Desfazer migration `yarn typeorm migration:revert`
+- Migrations não devem ser alteradas depois de enviadas para branch master
+- Alterações na base e tabelas devem ser feitas todas a partir de migrations
+- Migration da tabela appointments
+
+  ```ts
+  import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+
+  class CreateAppointments1594186870103 implements MigrationInterface {
+    public async up(queryRunner: QueryRunner): Promise<void> {
+      await queryRunner.createTable(
+        new Table({
+          name: 'appointments',
+          columns: [
+            {
+              name: 'id',
+              type: 'varchar',
+              isPrimary: true,
+              generationStrategy: 'uuid',
+            },
+            {
+              name: 'provider',
+              type: 'varchar',
+              isNullable: false,
+            },
+            {
+              name: 'date',
+              type: 'timestamp with time zone', // Apenas postgres
+              isNullable: false,
+            },
+          ],
+        }),
+      );
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+      await queryRunner.dropTable('appointments');
+    }
+  }
+
+  export default CreateAppointments1594186870103;
+
+  ```
+
+- Model da tabela appointments
+
+  ```ts
+  import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+  @Entity('appointments')
+  class Appointment {
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
+
+    @Column()
+    provider: string;
+
+    @Column('timestamp with time zone')
+    date: Date;
+  }
+
+  export default Appointment;
+
+  ```
+
+### Resumo do que foi feito:
+
+- Instalação do driver de postgres (pg)
+- Instalação do ORM typeorm e configuração para rodar com typescript
+- Instalação do reflect-metadata que é uma dependencia muito usada no typescript
+- Configuração da conexão com o banco de dados
+- Criação de migration
+- Adaptação de model e repository para integrar com typeorm
