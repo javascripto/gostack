@@ -1,0 +1,15 @@
+@baseURL = http://localhost:3333
+
+###
+
+POST {{baseURL}}/appointments
+Content-Type: application/json
+
+{
+  "provider": "Yuri Alves",
+  "date": "{{$datetime iso8601}}"
+}
+
+###
+
+GET {{baseURL}}/appointments
