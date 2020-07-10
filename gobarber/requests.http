@@ -1,26 +1,49 @@
-@baseURL = http://localhost:3333
+@hostname = localhost
+@port = 3333
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@modifiedBy = {{$processEnv USERNAME}}
+@baseURL = http://{{hostname}}:{{port}}
+@authToken = Bearer {{loginAPI.response.body.token}}
 
 ###
+# @name createAppointments
 
 POST {{baseURL}}/appointments
-Content-Type: application/json
+Content-Type: {{contentType}}
+Authorization: {{authToken}}
 
 {
   "provider_id": "fee2ddd8-95b1-4138-b991-74f421dba10a",
-  "date": "{{$datetime iso8601}}"
+  "date": "{{${{createdAt}}}}"
 }
 
 ###
+# @name listAppointments
 
 GET {{baseURL}}/appointments
+Authorization: {{authToken}}
 
 ###
+# @name createUser
 
 POST {{baseURL}}/users
-Content-Type: application/json
+Content-Type: {{contentType}}
 
 {
   "name": "Yuri Alves",
+  "email": "yurialves2@gmail.com",
+  "password": "çenha"
+}
+
+
+### Sessions
+# @name loginAPI
+
+POST {{baseURL}}/sessions
+Content-Type: {{contentType}}
+
+{
   "email": "yurialves2@gmail.com",
   "password": "çenha"
 }

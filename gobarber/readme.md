@@ -232,7 +232,7 @@ CMD yarn start
 - Adaptação de model e repository para integrar com typeorm
 
 
-## Alguns conceitos de banco de dados
+## Cadastro de usuários
 
 ### Alteração de colunas por meio de migrations
 
@@ -306,3 +306,12 @@ export default AlterProviderFieldToProviderId1594345210734;
 - Relacionamento entre users e appointments
 - Definição de estratégia de remoção e atualização em tabelas relacionadas
 - Criação de rota e service para criação de usuários
+
+
+## Autenticação
+
+### Resumo do que foi feito
+
+- Autenticação com JWT
+- Middleware de autenticação e proteção de endpoints privados
+- Declaração de tipos complementares para bibliotecas existentes
