@@ -6,10 +6,21 @@ POST {{baseURL}}/appointments
 Content-Type: application/json
 
 {
-  "provider": "Yuri Alves",
+  "provider_id": "fee2ddd8-95b1-4138-b991-74f421dba10a",
   "date": "{{$datetime iso8601}}"
 }
 
 ###
 
 GET {{baseURL}}/appointments
+
+###
+
+POST {{baseURL}}/users
+Content-Type: application/json
+
+{
+  "name": "Yuri Alves",
+  "email": "yurialves2@gmail.com",
+  "password": "çenha"
+}

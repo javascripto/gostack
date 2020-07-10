@@ -230,3 +230,79 @@ CMD yarn start
 - Configuração da conexão com o banco de dados
 - Criação de migration
 - Adaptação de model e repository para integrar com typeorm
+
+
+## Alguns conceitos de banco de dados
+
+### Alteração de colunas por meio de migrations
+
+```ts
+import {
+  QueryRunner,
+  TableColumn,
+  TableForeignKey,
+  MigrationInterface,
+} from 'typeorm';
+
+class AlterProviderFieldToProviderId1594345210734 implements MigrationInterface {
+  public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropColumn('appointments', 'provider');
+    await queryRunner.addColumn('appointments', new TableColumn({
+      name: 'provider_id',
+      type: 'uuid',
+      isNullable: true,
+    }));
+    await queryRunner.createForeignKey('appointments', new TableForeignKey({
+      name: 'AppointmentProvider',
+      columnNames: ['provider_id'],
+      referencedColumnNames: ['id'],
+      referencedTableName: 'users',
+      onDelete: 'SET NULL',
+      onUpdate: 'CASCADE',
+    }));
+  }
+
+  public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey('appointments', 'AppointmentProvider');
+    await queryRunner.dropColumn('appointments', 'provider_id');
+    await queryRunner.addColumn('appointments', new TableColumn({
+      name: 'provider',
+      type: 'varchar',
+    }));
+  }
+}
+
+export default AlterProviderFieldToProviderId1594345210734;
+
+```
+
+### Opções de chave extrangeira ao remover/alterar registros
+  - `RESTRICT`  Não deixa deletar o usuario
+  - `SET NULL`: Seta o provider_id como nulo
+  - `CASCADE`: Deleta todos agendamentos ao deletar o usuario
+  - Detalhes: http://www.bosontreinamentos.com.br/mysql/opcoes-de-chave-estrangeira-mysql/
+
+### Relacionamentos
+
+#### Tipos de relacionamentos entre classes:
+
+- Agregação
+- Composição
+- Dependencia
+
+#### Cardinalidade nos relacionamentos: 1:1, 1:N, N:N
+
+- Um para Um (OneToOne)
+  - 1 usuário tem 1 agendamento e vice versa
+- Um para Muitos (OneToMany)
+  - 1 usuário pode ter mais de 1 agendamento
+- Muitos para Muitos (ManyToMany)
+  - usuários podem ter mais de 1 agentamento e agendamentos podem atender mais de 1 usuário por vez
+
+### Resumo do que foi feito
+
+- Criação do Model User e da Migration da tabela users
+- Criação de migration que modifca campo da tabela appointments
+- Relacionamento entre users e appointments
+- Definição de estratégia de remoção e atualização em tabelas relacionadas
+- Criação de rota e service para criação de usuários
