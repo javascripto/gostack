@@ -6,7 +6,9 @@
 	"recommendations": [
 		"editorconfig.editorconfig",
 		"dbaeumer.vscode-eslint",
-		"dracula-theme.theme-dracula"
+		"dracula-theme.theme-dracula",
+		"hediet.vscode-drawio",
+		"humao.rest-client"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
 	"unwantedRecommendations": [

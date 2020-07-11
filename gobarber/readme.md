@@ -315,3 +315,14 @@ export default AlterProviderFieldToProviderId1594345210734;
 - Autenticação com JWT
 - Middleware de autenticação e proteção de endpoints privados
 - Declaração de tipos complementares para bibliotecas existentes
+
+
+## Upload de arquivos
+
+### Resumo do que foi feito
+
+- Utilização da library multer para upload de arquivos
+- Adição de uma nova coluna na tabela de usuarios para armazenar o diretorio do avatar
+- Criação de rota estática para disponibilizar imagens de avatres dos usuarios
+- Nova request de upload com a extensão RestClient
+- Uso da extensão do drawio para criar um avatar de exemplo

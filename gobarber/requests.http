@@ -36,6 +36,27 @@ Content-Type: {{contentType}}
   "password": "çenha"
 }
 
+###
+# @name uploadUserAvatar
+PATCH {{baseURL}}/users/avatar
+Authorization: {{authToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="key"
+
+value
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="key"
+
+value
+------WebKitFormBoundary7MA4YWxkTrZu0gW
+Content-Disposition: form-data; name="avatar"; filename="avatar-example.drawio.png"
+Content-Type: image/png
+
+< ./avatar-example.drawio.png
+
+------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
 ### Sessions
 # @name loginAPI
