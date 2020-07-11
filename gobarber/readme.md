@@ -326,3 +326,12 @@ export default AlterProviderFieldToProviderId1594345210734;
 - Criação de rota estática para disponibilizar imagens de avatres dos usuarios
 - Nova request de upload com a extensão RestClient
 - Uso da extensão do drawio para criar um avatar de exemplo
+
+## Lidando com erros
+
+### Resumo do que foi feito
+
+- Criação e uso da classe de erros da aplicação
+- Remoção de blocos try/catch nos request handlers
+- Exposição de erros personalizados para o cliente e ocultacão de erros internos
+- Configuração de middleware de error handler que recebe um callback com 4 argumentos
