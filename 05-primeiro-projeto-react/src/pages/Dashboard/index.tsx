@@ -7,9 +7,12 @@ import api from '../../services/api';
 import logoImage from '../../assets/logo.svg';
 import { Title, Form, Repositories, Error } from './styles';
 
-interface Repository {
+export interface Repository {
   full_name: string;
   description: string;
+  forks_count: number;
+  stargazers_count: number;
+  open_issues_count: number;
   owner: {
     login: string;
     avatar_url: string;
