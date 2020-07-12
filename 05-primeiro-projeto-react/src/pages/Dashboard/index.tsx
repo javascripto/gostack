@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { Link } from 'react-router-dom';
 import { FiChevronRight } from 'react-icons/fi';
 import React, { useState, FormEvent, useEffect } from 'react';
 
@@ -52,7 +53,6 @@ const Dashboard: React.FC = () => {
     <>
       <img src={logoImage} alt="Github Explorer" />
       <Title>Explore repositórios no Github</Title>
-
       <Form hasError={!!inputError} onSubmit={handleAddRepository}>
         <input
           value={newRepo}
@@ -62,17 +62,16 @@ const Dashboard: React.FC = () => {
         <button type="submit">Pesquisar</button>
       </Form>
       {inputError && <Error>{inputError}</Error>}
-
       <Repositories>
         {repositories.map(({ owner, full_name, description }) => (
-          <a href={full_name} key={full_name}>
+          <Link to={`/repositories/${full_name}`} key={full_name}>
             <img src={owner.avatar_url} alt={owner.login} />
             <div>
               <strong>{full_name}</strong>
               <p>{description}</p>
             </div>
             <FiChevronRight size={20} />
-          </a>
+          </Link>
         ))}
       </Repositories>
     </>

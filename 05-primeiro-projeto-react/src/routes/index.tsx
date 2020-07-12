@@ -7,7 +7,7 @@ import Repository from '../pages/Repository';
 export const Routes = () => (
   <Switch>
     <Route path="/" exact component={Dashboard} />
-    <Route path="/repository" component={Repository} />
+    <Route path="/repositories/:repository+" component={Repository} />
   </Switch>
 );
 

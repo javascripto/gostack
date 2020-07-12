@@ -1,7 +1,14 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React from 'react';
+import { useRouteMatch } from 'react-router-dom';
+
+interface RepositoryParams {
+  repository: string;
+}
 
 const Repository = () => {
-  return <h1>Explore repositórios no Github</h1>;
+  const { params } = useRouteMatch<RepositoryParams>();
+  return <h1>Repository: {params.repository}</h1>;
 };
 
 export default Repository;
