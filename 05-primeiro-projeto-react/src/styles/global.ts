@@ -24,7 +24,7 @@ export default createGlobalStyle`
     margin: 0 auto;
   }
 
-  button {
+  button, a {
     cursor: pointer;
   }
 
