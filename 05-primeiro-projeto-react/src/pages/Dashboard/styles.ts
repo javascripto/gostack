@@ -65,6 +65,7 @@ export const Error = styled.span`
 export const Repositories = styled.div`
   margin-top: 80px;
   max-width: 700px;
+  margin-bottom: 100px;
 
   a {
     background: #fff;
