@@ -1,5 +1,13 @@
 import React from 'react';
 
-const App = () => <h1>Hello World</h1>;
+import SignIn from './pages/SignIn';
+import GlobalStyle from './styles/global';
+
+const App = () => (
+  <>
+    <GlobalStyle />
+    <SignIn />
+  </>
+);
 
 export default App;
