@@ -7,29 +7,41 @@ import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 import logo from '../../assets/logo.svg';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import { useAuth } from '../../hooks/AuthContext';
 import { Container, Content, Background } from './styles';
 import getValidationErrors from '../../utils/getValidationErrors';
 
+interface SignInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
+  const { signIn } = useAuth();
   const formRef = useRef<FormHandles>(null);
 
-  const handleSubmit = useCallback(async (data: any) => {
-    try {
-      formRef.current?.setErrors({});
+  const handleSubmit = useCallback(
+    async (data: SignInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatória'),
-      });
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatória'),
+        });
 
-      await schema.validate(data, { abortEarly: false });
-    } catch (error) {
-      const errors = getValidationErrors(error);
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+        await schema.validate(data, { abortEarly: false });
+        const { email, password } = data;
+        signIn({ email, password });
+      } catch (error) {
+        const errors = getValidationErrors(error);
+        formRef.current?.setErrors(errors);
+      }
+    },
+    [signIn],
+  );
   return (
     <Container>
       <Content>
