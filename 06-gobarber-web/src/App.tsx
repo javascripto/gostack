@@ -1,14 +1,14 @@
 import React from 'react';
 
 import SignIn from './pages/SignIn';
-import GlobalStyle from './styles/global';
 import Signup from './pages/Signup';
+import GlobalStyle from './styles/global';
 
 const App = () => (
   <>
     <GlobalStyle />
-    {/* <SignIn /> */}
-    <Signup />
+    <SignIn />
+    {/* <Signup /> */}
   </>
 );
 
