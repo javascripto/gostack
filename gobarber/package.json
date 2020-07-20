@@ -7,11 +7,13 @@
     "build": "tsc",
     "dev:server": "ts-node-dev --transpileOnly --ignore-watch node_modules src/server.ts",
     "dev:server:debugger": "ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts",
-    "start:postgres": "docker run --name gostack_postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres",
+    "run:postgres": "docker run --name gostack_postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres",
+    "start:postgres": "docker start gostack_postgres",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "date-fns": "^2.14.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
@@ -24,6 +26,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.6",
     "@types/express": "^4.17.6",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/multer": "^1.4.3",

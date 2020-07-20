@@ -15,7 +15,7 @@ Authorization: {{authToken}}
 
 {
   "provider_id": "fee2ddd8-95b1-4138-b991-74f421dba10a",
-  "date": "{{${{createdAt}}}}"
+  "date": "{{createdAt}}"
 }
 
 ###
