@@ -1,19 +1,18 @@
-import React from 'react';
-import {View, Text} from 'react-native';
+import 'react-native-gesture-handler';
 
-const App = () => {
-  return (
-    <View style={{alignSelf: 'center'}}>
-      <Text
-        style={{
-          flex: 1,
-          textAlignVertical: 'center',
-          fontSize: 28,
-        }}>
-        Hello World
-      </Text>
+import React, { FC } from 'react';
+import { View, StatusBar } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+
+import Routes from './routes';
+
+const App: FC = () => (
+  <NavigationContainer>
+    <StatusBar barStyle="light-content" backgroundColor="#312e38" />
+    <View style={{ backgroundColor: '#312e38', flex: 1 }}>
+      <Routes />
     </View>
-  );
-};
+  </NavigationContainer>
+);
 
 export default App;
