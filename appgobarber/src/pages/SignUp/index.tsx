@@ -1,10 +1,15 @@
 import React, { FC } from 'react';
-import { View } from 'react-native';
+import { Image } from 'react-native';
 
 import { Container } from './styles';
+import logoImg from '../../assets/logo.png';
 
 const SignUp: FC = () => {
-  return <Container />;
+  return (
+    <Container>
+      <Image source={logoImg} />
+    </Container>
+  );
 };
 
 export default SignUp;
