@@ -9,6 +9,7 @@
     "dev:server:debugger": "ts-node-dev --inspect --transpileOnly --ignore-watch node_modules src/server.ts",
     "run:postgres": "docker run --name gostack_postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres",
     "start:postgres": "docker start gostack_postgres",
+    "stop:postgress": "docker stop gostack_postgres",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
