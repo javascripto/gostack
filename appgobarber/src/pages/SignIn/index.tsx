@@ -7,6 +7,7 @@ import {
   View,
   Image,
   Platform,
+  TextInput,
   ScrollView,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -24,6 +25,7 @@ import Input from '../../components/Input';
 import Button from '../../components/Button';
 
 const SignIn: FC = () => {
+  const passwordInputRef = useRef<TextInput>(null);
   const formRef = useRef<FormHandles>(null);
   const { navigate } = useNavigation();
   const handleSignIn = useCallback(data => {
@@ -48,8 +50,29 @@ const SignIn: FC = () => {
               <Title>Faça seu logon</Title>
             </View>
             <Form ref={formRef} onSubmit={handleSignIn}>
-              <Input name="email" icon="mail" placeholder="E-mail" />
-              <Input name="password" icon="lock" placeholder="Senha" />
+              <Input
+                name="email"
+                icon="mail"
+                autoCorrect={false}
+                placeholder="E-mail"
+                returnKeyType="next"
+                autoCapitalize="none"
+                keyboardType="email-address"
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus();
+                }}
+              />
+              <Input
+                icon="lock"
+                secureTextEntry
+                name="password"
+                placeholder="Senha"
+                returnKeyType="send"
+                ref={passwordInputRef}
+                onSubmitEditing={() => {
+                  formRef.current?.submitForm();
+                }}
+              />
               <Button
                 onPress={() => {
                   formRef.current?.submitForm();
