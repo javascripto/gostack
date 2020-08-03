@@ -67,7 +67,7 @@ const Input: InputWithRef = ({ name, icon, ...props }, ref) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container isFocused={isFocused}>
+    <Container isFocused={isFocused} hasError={!!error}>
       <Icon
         name={icon}
         size={20}

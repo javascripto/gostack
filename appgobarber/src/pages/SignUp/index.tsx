@@ -1,3 +1,4 @@
+import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import Icon from 'react-native-vector-icons/Feather';
@@ -10,22 +11,53 @@ import {
   TextInput,
   ScrollView,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 
 import logoImg from '../../assets/logo.png';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
+import getValidationErrors from '../../utils/getValidationErrors';
 import { Title, Container, BackToSignIn, BackToSignInText } from './styles';
+
+interface SignupFormData {
+  name: string;
+  email: string;
+  password: string;
+}
 
 const SignUp: FC = () => {
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
   const { goBack } = useNavigation();
-  const handleSubmit = useCallback(data => {
-    console.log(data);
-    alert(JSON.stringify(data, null, 2));
+
+  const handleSignUp = useCallback(async (data: SignupFormData) => {
+    try {
+      formRef.current?.setErrors({});
+
+      const schema = Yup.object().shape({
+        name: Yup.string().required('Nome obrigatório'),
+        email: Yup.string()
+          .required('E-mail obrigatório')
+          .email('Digite um e-mail válido'),
+        password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+      });
+
+      await schema.validate(data, { abortEarly: false });
+      // await api.post('/users/', data);
+    } catch (error) {
+      if (error instanceof Yup.ValidationError) {
+        const errors = getValidationErrors(error);
+        return formRef.current?.setErrors(errors);
+      }
+      Alert.alert(
+        'Erro no cadastro',
+        'Ocorreu um erro ao fazer cadastro, ente novamente',
+      );
+    }
   }, []);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -42,7 +74,7 @@ const SignUp: FC = () => {
             <View>
               <Title>Crie sua conta</Title>
             </View>
-            <Form ref={formRef} onSubmit={handleSubmit}>
+            <Form ref={formRef} onSubmit={handleSignUp}>
               <Input
                 name="name"
                 icon="user"

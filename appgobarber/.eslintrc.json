@@ -35,8 +35,6 @@
     "import/prefer-default-export": "off",
     "react/jsx-props-no-spreading": "off",
     "no-unused-expressions": "off",
-    "no-alert": "off",
-    "no-console": "off",
     "@typescript-eslint/no-empty-function": "off",
     "react/prop-types": "off",
     "import/extensions": [
