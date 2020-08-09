@@ -335,3 +335,44 @@ export default AlterProviderFieldToProviderId1594345210734;
 - Remoção de blocos try/catch nos request handlers
 - Exposição de erros personalizados para o cliente e ocultacão de erros internos
 - Configuração de middleware de error handler que recebe um callback com 4 argumentos
+
+### Arquitetura e DDD
+
+#### Separação em modulos, contextos limitados, organizando estrutura de diretorios
+
+Estrutura da plicação foi modificada. Dentro de src agora temos inicialmente três diretorios (config, modules, shared).
+
+O diretório modules é onde a aplicação separa contextos de dominio, já o shared é onde ficam recursos compartilhados em toda aplicação.
+
+#### Camada de domínio x Camda de infra
+
+Na camada de dominio ficam as regras de negocio e a area de conhecimento de um dominio.
+Na camada de infraficam ferramentas escolhidas para se relacionar com camada de dominio.
+Ex: database, email, tecnologias usadas na aplicação que são discutidas pelo CTO e devs.
+O arquivo server.ts, rotas da aplicação e middlewares foram movidos para shared/infra/http pois estão ligados ao framework express e protocolo http. Caso algum dia a aplicação mude a forma de comunicação para grpc por exemplo, os arquivos já estão separados.
+Migrations do typeorm foram movidas para shared/infra/typeorm pois estão ligadas com a tecnologia de banco.
+O diretorio de erros apenas foi movido para shared/erros porque são compartilhados na aplicação mas nao fazem parte da camada de infra.
+Dentro de cada modulo que temos até o momento (users, appointments), tambem temos uma camada de infra.
+Entidades models do typeorm foram movidas para camada de infra de cada modulo pois estão ligadas diretamente com o typeorm por meio de decorators.
+Services, repositories tambem foram separados e estão em seus respectivos diretorios separados por módulos.
+
+#### Configurando import paths no tsconfig
+
+Para termos imports sem caminhos relativos, podemos usar atalho como `import User from '~models/users'` ou `import User from '@models/users'`.
+Para isso é necessário configurar duas propriedades no `tsconfig.json`: `baseUrl` e `paths`
+Também é necessário utilizar um plugin para o `ts-node-dev` entender os atalhos de importação
+
+- Configuração do `tsconfig`
+
+```json
+"baseUrl": "./src",
+"paths": {
+  "@modules/*": ["modules/*"],
+  "@config/*": ["config/*"],
+  "@shared/*": ["shared/*"]
+},
+```
+
+- Plugin para `ts-node-dev`: `yarn add -D tsconfig-paths`.
+- Após instalar o plugin, altere no `package.json` os scripts de execução do `ts-node-dev` para registrar o plugin:
+`ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts`

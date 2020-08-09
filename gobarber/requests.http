@@ -5,24 +5,7 @@
 @modifiedBy = {{$processEnv USERNAME}}
 @baseURL = http://{{hostname}}:{{port}}
 @authToken = Bearer {{loginAPI.response.body.token}}
-
-###
-# @name createAppointments
-
-POST {{baseURL}}/appointments
-Content-Type: {{contentType}}
-Authorization: {{authToken}}
-
-{
-  "provider_id": "fee2ddd8-95b1-4138-b991-74f421dba10a",
-  "date": "{{createdAt}}"
-}
-
-###
-# @name listAppointments
-
-GET {{baseURL}}/appointments
-Authorization: {{authToken}}
+@userId = {{loginAPI.response.body.user.id}}
 
 ###
 # @name createUser
@@ -35,6 +18,18 @@ Content-Type: {{contentType}}
   "email": "yurialves2@gmail.com",
   "password": "çenha"
 }
+
+### Sessions
+# @name loginAPI
+
+POST {{baseURL}}/sessions
+Content-Type: {{contentType}}
+
+{
+  "email": "yurialves2@gmail.com",
+  "password": "çenha"
+}
+
 
 ###
 # @name uploadUserAvatar
@@ -58,13 +53,21 @@ Content-Type: image/png
 
 ------WebKitFormBoundary7MA4YWxkTrZu0gW--
 
-### Sessions
-# @name loginAPI
 
-POST {{baseURL}}/sessions
+###
+# @name createAppointments
+
+POST {{baseURL}}/appointments
 Content-Type: {{contentType}}
+Authorization: {{authToken}}
 
 {
-  "email": "yurialves2@gmail.com",
-  "password": "çenha"
+  "provider_id": "{{userId}}",
+  "date": "{{createdAt}}"
 }
+
+###
+# @name listAppointments
+
+GET {{baseURL}}/appointments
+Authorization: {{authToken}}
