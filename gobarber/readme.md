@@ -376,3 +376,11 @@ Também é necessário utilizar um plugin para o `ts-node-dev` entender os atalh
 - Plugin para `ts-node-dev`: `yarn add -D tsconfig-paths`.
 - Após instalar o plugin, altere no `package.json` os scripts de execução do `ts-node-dev` para registrar o plugin:
 `ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts`
+
+#### Liskov Substitution Principle
+
+O Repositorio de appointments extende da uma classe do typeorm e isso deixa a classe de repository muito acoplada à tecnologia usada.
+Para desfazer esse acoplamento vamos mover o repository para camada de infra do modulo de appointments e criar uma interface de Repository no diretório que a classe Appointments se encontrva antes.
+A interface servirá para abstrair o comportamento do repositório para que o mesmo possa ser substituído caso necessário.
+Assim a aplicação passa a não conhecer mais a tecnologia de armazenamento utilizada, podendo implementar outras classes de repositorio que obtenha os dados da memoria do computador no lugar de um banco de dados por exemplo.
+Essa alteração é uma forma de aplicar o princípio de substituição de Liskov. É o princípio que representa a letra "L" no acrônimo S.O.L.I.D.
