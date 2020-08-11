@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import authConfig from '@config/auth';
 import AppError from '@shared/errors/AppError';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -22,8 +22,8 @@ function ensureAuthenticated(
   const [, token] = authHeader.split(' ');
   try {
     const decoded = verify(token, authConfig.jwt.secret);
-    const { sub } = decoded as TokenPayload;
-    request.user = { id: sub };
+    const { sub } = decoded as ITokenPayload;
+    Object.defineProperty(request, 'user', { value: { id: sub } });
     return next();
   } catch {
     throw new AppError('Invalid JWT token', 401);
