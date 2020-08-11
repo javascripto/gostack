@@ -390,3 +390,37 @@ Essa alteração é uma forma de aplicar o princípio de substituição de Lisko
 Para desacoplar as classes de repository da tecnologia typeorm, vamos remover a instrução de herança e o decorator usado nas classes de repository.
 Para usarmos ainversão de dependencia e fazermos a aplicação depender de abstrações ao invés de implementações, tambem declaramos interfaces para os repositorios da aplicação (UsersRepository, AppointmentsRepository). Cada repositorio deve implementar algums métodos utilizando o Repository do typeorm mas sem herança de classes que trazem métodos extras para a classe.
 Assim podemos ter mais controle do que a classe de reposity faz.
+
+### Injeção de dependencias
+
+Até agora estávamos instanciando manualmente cada repository e service usado dos endpoints da aplicação. Já estávamos proparados com principios SOLID para desacoplar a aplicação por meio de interfaces, inversão de dependencia, e substituição de classes de mesma interface etc. Agora vamos usar algo para facilitar o trabalho de obter instancias das classes utilizadas como singletons por meios de containers de injeção de dependencias providos pela biblioteca `tsyringe` da microsoft.
+
+- Primeiro isntalamos a lib com o comando: `yarn add tsyringe`
+- Depois registramos as classes que serão injetadas como dependencias nos construtores de outras classes.
+
+```ts
+container.registerSingleton<IUsersRepository>(
+  UsersRepository.name,
+  UsersRepository,
+);
+```
+
+- Agora já podemos marcar nossas classes de serviços com o decorator `@injectable()` para permitir recuperar isntancias das mesmas nos endpoints. Tambem marcamos as dependencias da classe com o decorator `@inject()` e informamos qual classe será registrada como implementação para abstracóes de determinadas interface.
+
+```ts
+@injectable()
+class CreateUserService {
+  constructor(
+    @inject(UsersRepository.name)
+    private usersRepository: IUsersRepository,
+  ) {}
+
+  execute() { /*...*/ }
+}
+```
+- Por ultimo vamos substituir as instancias dos Repositories e Services nos arquivos de rotas pela instancia do serviço que cada rota usa e que é obtido por meio do container de injeção de dependencias por meio do método `resolve()`.
+
+```ts
+const createUser = container.resolve(CreateUserService);
+createUser.execute(/*...*/)
+```
