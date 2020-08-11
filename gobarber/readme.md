@@ -384,3 +384,9 @@ Para desfazer esse acoplamento vamos mover o repository para camada de infra do 
 A interface servirá para abstrair o comportamento do repositório para que o mesmo possa ser substituído caso necessário.
 Assim a aplicação passa a não conhecer mais a tecnologia de armazenamento utilizada, podendo implementar outras classes de repositorio que obtenha os dados da memoria do computador no lugar de um banco de dados por exemplo.
 Essa alteração é uma forma de aplicar o princípio de substituição de Liskov. É o princípio que representa a letra "L" no acrônimo S.O.L.I.D.
+
+### Reescrevendo repositorio
+
+Para desacoplar as classes de repository da tecnologia typeorm, vamos remover a instrução de herança e o decorator usado nas classes de repository.
+Para usarmos ainversão de dependencia e fazermos a aplicação depender de abstrações ao invés de implementações, tambem declaramos interfaces para os repositorios da aplicação (UsersRepository, AppointmentsRepository). Cada repositorio deve implementar algums métodos utilizando o Repository do typeorm mas sem herança de classes que trazem métodos extras para a classe.
+Assim podemos ter mais controle do que a classe de reposity faz.
