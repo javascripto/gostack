@@ -11,7 +11,8 @@
     "run:postgres": "docker run --name gostack_postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres",
     "start:postgres": "docker start gostack_postgres",
     "stop:postgress": "docker stop gostack_postgres",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -42,7 +43,9 @@
     "eslint-import-resolver-typescript": "^2.0.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.3.0",
     "prettier": "^2.0.5",
+    "ts-jest": "^26.2.0",
     "ts-node-dev": "^1.0.0-pre.49",
     "tsconfig-paths": "^3.9.0",
     "typescript": "^3.9.5"

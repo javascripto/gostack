@@ -424,3 +424,50 @@ class CreateUserService {
 const createUser = container.resolve(CreateUserService);
 createUser.execute(/*...*/)
 ```
+
+### Configuração do Jest para testes com typescript
+
+- `yarn add jest ts-jest @types/jest -D`
+- `yarn jest --init`
+- Após a instalação e inicialização do jest, algumas configurações precisam ser feitas no `jest.config.js` e `.eslintrc.json`
+
+```js
+// jest.config.js
+
+const { pathsToModuleNameMapper } = require('ts-jest/utils')
+const { compilerOptions } = require('./tsconfig.json')
+
+{
+  preset: 'ts-jest',
+  testMatch: [
+    "**/*.(spec|test).ts"
+  ],
+  // ConfiguraçÕes de cobertura de testes
+  collectCoverage: true,
+  coverageDirectory: 'coverage',
+  collectCoverageFrom: [
+    '<rootDir>/src/moduels/**/services/*.ts'
+  ],
+  coverageReporters: [
+    "text-summary",
+    "lcov",
+  ],
+  // Configuração para utilizar import path customizado
+  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+    prefix: '<rootDir>/src/'
+  }),
+}
+```
+
+```js
+// .eslintrc.json
+{
+  "env": {
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+}
+```
+
+- Para facilitar os testes unitários da aplicação, algumas classes foram alteradas para respeitar alguns principios do SOLID e também facilitar a substituição por classes dublês nos testes. Exemplo: FakeUsersRepository, FakeAppointmentsRepository HashProvider, StorageProvider.
