@@ -4,7 +4,6 @@ import AppError from '@shared/errors/AppError';
 import User from '@modules/users/infra/typeorm/entities/User';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 import IUsersRepository from '../repositories/IUsersRepository';
-import UsersRepository from '../infra/typeorm/repositories/UsersRepository';
 
 interface IRequest {
   user_id: string;
@@ -14,7 +13,7 @@ interface IRequest {
 @injectable()
 class UpdateUserAvatarService {
   constructor(
-    @inject(UsersRepository.name)
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
 
     @inject('StorageProvider')

@@ -3,7 +3,6 @@ import { startOfHour } from 'date-fns';
 
 import AppError from '@shared/errors/AppError';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
-import AppointmentsRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepository';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
@@ -14,7 +13,7 @@ interface IRequest {
 @injectable()
 class CreateAppointmentService {
   constructor(
-    @inject(AppointmentsRepository.name)
+    @inject('AppointmentsRepository')
     private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
