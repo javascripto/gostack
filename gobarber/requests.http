@@ -71,3 +71,26 @@ Authorization: {{authToken}}
 
 GET {{baseURL}}/appointments
 Authorization: {{authToken}}
+
+###
+
+# @name forgotPassword
+
+POST {{baseURL}}/password/forgot
+Content-Type: application/json
+
+{
+  "email": "yurialves2@gmail.com"
+}
+
+###
+
+# @name resetPassword
+
+POST {{baseURL}}/password/reset
+Content-Type: application/json
+
+{
+  "token": "c69760ca-b485-459a-b928-58680e3dbfeb",
+  "password": "123123"
+}
