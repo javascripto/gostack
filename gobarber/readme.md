@@ -411,7 +411,7 @@ container.registerSingleton<IUsersRepository>(
 @injectable()
 class CreateUserService {
   constructor(
-    @inject(UsersRepository.name)
+    @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) {}
 
@@ -471,3 +471,13 @@ const { compilerOptions } = require('./tsconfig.json')
 ```
 
 - Para facilitar os testes unitários da aplicação, algumas classes foram alteradas para respeitar alguns principios do SOLID e também facilitar a substituição por classes dublês nos testes. Exemplo: FakeUsersRepository, FakeAppointmentsRepository HashProvider, StorageProvider.
+
+- Uma coisa que percebi referente ao container de injeção de  dependencias é que classes ue possuem construtor não podem ser registradas no container como singleton, mas sim com instancia já instanciando a mesma:
+
+```ts
+container.registerInstance<IMailProvider>(
+  'MailProvider',
+  new EtherealMailProvider(),
+);
+
+```
