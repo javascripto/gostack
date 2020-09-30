@@ -94,3 +94,25 @@ Content-Type: application/json
   "token": "c69760ca-b485-459a-b928-58680e3dbfeb",
   "password": "123123"
 }
+
+###
+
+# @name showProfile
+
+GET {{baseURL}}/profile
+Content-Type: application/json
+Authorization: {{authToken}}
+
+
+###
+
+# @name updateProfile
+
+PUT {{baseURL}}/profile
+Content-Type: application/json
+Authorization: {{authToken}}
+
+{
+  "name": "Yuri Alves",
+  "email": "yurialves2@gmail.com"
+}
