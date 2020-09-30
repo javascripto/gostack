@@ -42,3 +42,19 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+## Coisas novas:
+
+- Biblioteca de formularios da rocketseat (unform) + yup para validação
+- Construção da validação de formularios, tooltips de erros com styled components
+- useCallback para memorizar funcoes sem recria-las a cada renderização
+- Context API para compartilhamento de informações entre componentes de mesmo escopo/contexto
+- Toaster provider para alertas com mensagens
+- Pacote react-spring para animaçoes mesmo depois de remover um componente do DOM. https://www.react-spring.io/
+- https://www.notion.so/React-Hooks-e-Context-API-c2effc37567442adbfa36bbc4cd94d9c
+
+
+## Coisas novas do app mobile:
+
+-
