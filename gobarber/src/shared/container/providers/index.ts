@@ -5,7 +5,7 @@ import IStorageProvider from './StorageProvider/models/IStorageProvider';
 import DiskStorageProvider from './StorageProvider/implementations/DiskStorageProvider';
 import EtherealMailProvider from './MailProvider/implementations/EtherealMailProvider';
 import IMailTemplateProvider from './MailTemplateProvider/Models/IMailTemplateProvider';
-import HandlebarsMailTemplateprovider from './MailTemplateProvider/Implementations/HandlebarsMailTemplateProvider';
+import HandlebarsMailTemplateProvider from './MailTemplateProvider/Implementations/HandlebarsMailTemplateProvider';
 
 container.registerSingleton<IStorageProvider>(
   'StorageProvider',
@@ -14,12 +14,12 @@ container.registerSingleton<IStorageProvider>(
 
 container.registerSingleton<IMailTemplateProvider>(
   'MailTemplateProvider',
-  HandlebarsMailTemplateprovider,
+  HandlebarsMailTemplateProvider,
 );
 
 container.registerInstance<IMailProvider>(
   'MailProvider',
   new EtherealMailProvider(
-    container.resolve(HandlebarsMailTemplateprovider),
+    container.resolve(HandlebarsMailTemplateProvider),
   ),
 );
