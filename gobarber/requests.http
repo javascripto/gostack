@@ -14,9 +14,9 @@ POST {{baseURL}}/users
 Content-Type: {{contentType}}
 
 {
-  "name": "Yuri Alves",
-  "email": "yurialves2@gmail.com",
-  "password": "çenha"
+  "name": "John Doe",
+  "email": "johndoe@gmail.com",
+  "password": "password"
 }
 
 ### Sessions
@@ -116,3 +116,12 @@ Authorization: {{authToken}}
   "name": "Yuri Alves",
   "email": "yurialves2@gmail.com"
 }
+
+###
+
+# @name listProviders
+
+GET {{baseURL}}/providers
+Authorization: {{authToken}}
+
+###
