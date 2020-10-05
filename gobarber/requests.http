@@ -14,6 +14,19 @@ POST {{baseURL}}/users
 Content-Type: {{contentType}}
 
 {
+  "name": "Yuri Almeida",
+  "email": "yurialves2@gmail.com",
+  "password": "çenha"
+}
+
+###
+
+# @name createUser2
+
+POST {{baseURL}}/users
+Content-Type: {{contentType}}
+
+{
   "name": "John Doe",
   "email": "johndoe@gmail.com",
   "password": "password"
@@ -30,6 +43,16 @@ Content-Type: {{contentType}}
   "password": "çenha"
 }
 
+###
+# @name loginAPI2
+
+POST {{baseURL}}/sessions
+Content-Type: {{contentType}}
+
+{
+  "email": "johndoe@gmail.com",
+  "password": "password"
+}
 
 ###
 # @name uploadUserAvatar
@@ -63,13 +86,17 @@ Authorization: {{authToken}}
 
 {
   "provider_id": "{{userId}}",
-  "date": "{{createdAt}}"
+  "date": "2020-10-06T10:00:00",
+  "_date": "{{createdAt}}"
 }
 
 ###
 # @name listAppointments
 
-GET {{baseURL}}/appointments
+GET {{baseURL}}/appointments/me
+  ?day=6
+  &month=10
+  &year=2020
 Authorization: {{authToken}}
 
 ###
