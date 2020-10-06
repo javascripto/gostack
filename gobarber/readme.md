@@ -482,7 +482,7 @@ container.registerInstance<IMailProvider>(
 
 ```
 
-### COnfigurando typeorm para trabalhar com dois tipos de bancos (postgress e mongodb)
+### Configurando typeorm para trabalhar com dois tipos de bancos (postgress e mongodb)
 
 - Primeiro é necessário instalar a dependencia do mongodb com `yarn add mongodb && yarn add -D @types/mongodb`
 - Agora no arquivo ormconfig.json o objeto de configuração é alterado para ser um array com as configurações do mongo
@@ -494,3 +494,20 @@ container.registerInstance<IMailProvider>(
     "start:mongo": "docker start mongodb",
     "stop:mongo": "docker stop mongodb",
 ```
+
+### Adicionando válidação de requisições com celebrate
+
+- Primeiramente instalamnos a lib `celebrate` com `yarn add celebrate`. Ela já vem com a lib Joi para trabalhar com validações
+- Depois de instalar a lib, é necessário configurar em cada rota que precise de validação de dados recebidos usando o celebrate como middleware
+
+```ts
+sessionsRoutes.post('/', celebrate({
+
+  [Segments.BODY]: {
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  },
+}), sessionsController.create);
+```
+
+- Para que as mensagens de erro sejam exibidas, é necessário configurar o middleware de `erros()` do celebrate antes de configurar o error handler global.
