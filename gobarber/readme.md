@@ -495,6 +495,41 @@ container.registerInstance<IMailProvider>(
     "stop:mongo": "docker stop mongodb",
 ```
 
+- `ormconfig.json`
+```json
+[
+  {
+    "name": "default",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "postgres",
+    "password": "docker",
+    "database": "gostack_gobarber",
+    "entities": [
+      "./src/modules/**/infra/typeorm/entities/*.ts"
+    ],
+    "migrations": [
+      "./src/shared/infra/typeorm/migrations/*.ts"
+    ],
+    "cli": {
+      "migrationsDir": "./src/shared/infra/typeorm/migrations"
+    }
+  },
+  {
+    "name": "mongo",
+    "type": "mongodb",
+    "host": "localhost",
+    "port": 27017,
+    "database": "gobarber",
+    "useUnifiedTopology": true,
+    "entities": [
+      "./src/modules/**/infra/typeorm/schemas/*.ts"
+    ]
+  }
+]
+```
+
 ### Adicionando válidação de requisições com celebrate
 
 - Primeiramente instalamnos a lib `celebrate` com `yarn add celebrate`. Ela já vem com a lib Joi para trabalhar com validações
@@ -511,3 +546,23 @@ sessionsRoutes.post('/', celebrate({
 ```
 
 - Para que as mensagens de erro sejam exibidas, é necessário configurar o middleware de `erros()` do celebrate antes de configurar o error handler global.
+
+### Trabalhando com variáveis de ambiente
+
+- Algumas variaveis devem ser removidas do codigo para facilitar a troca de valores em ambientes diferentes. Para isso é usada a lib `dotenv`. `yarn add dotenv`
+- A lib dotenv carrega valores a partir de um arquivo `.env` para o ambiente de execução do sistema. Esse arquivo também precisa dser ignorado no `.gitignore`.
+- Quando alguem clonar o repositorio novamente, essa pessoa precisa saber quais são as variaveis configuradas no `.env` então é necessário criar um arquivo `.env.example` com tais variavéis porém sem os valores. Esse arquivo pode ser incluído no git.
+- Para facilitar a criação do `.env`, podemos criar um script de `postinstall` no `package.json`
+
+```json
+  "postinstall": "node -p \"fs.existsSync('.env') || fs.copyFileSync('.env.example', '.env')\""
+```
+
+- Um arquivo `.env` se parece com isso
+
+```sh
+APP_KEY=n1k238h1923ijn12n39uj
+APP_WEB_URL=http://localhost:3333
+```
+
+- As configurações de banco de dados também devem ser removidas do projeto acrescentando o `ormconfig.json` no `.gitignore` e removendo este arquivo do cache do `git` com o comando `git rm --cached ormconfig.json`
