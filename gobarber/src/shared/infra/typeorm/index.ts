@@ -1,5 +1,5 @@
-import { createConnection } from 'typeorm';
+import { createConnections } from 'typeorm';
 
 // Configurações por default lidas do ormconfig.json
-// ou passadas como argumento de createConnection
-createConnection();
+// ou passadas como argumento de createConnection(s)
+createConnections();

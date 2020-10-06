@@ -85,8 +85,9 @@ Content-Type: {{contentType}}
 Authorization: {{authToken}}
 
 {
-  "provider_id": "{{userId}}",
-  "date": "2020-10-06T10:00:00",
+  "provider_id": "0488640e-860b-46ef-a952-3a866a44c914",
+  "_provider_id": "{{userId}}",
+  "date": "2020-10-07T13:00:00",
   "_date": "{{createdAt}}"
 }
 

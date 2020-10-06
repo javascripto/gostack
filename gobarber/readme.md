@@ -481,3 +481,16 @@ container.registerInstance<IMailProvider>(
 );
 
 ```
+
+### COnfigurando typeorm para trabalhar com dois tipos de bancos (postgress e mongodb)
+
+- Primeiro é necessário instalar a dependencia do mongodb com `yarn add mongodb && yarn add -D @types/mongodb`
+- Agora no arquivo ormconfig.json o objeto de configuração é alterado para ser um array com as configurações do mongo
+- Por ultimo o arquivo de inicialização do typeorm é alterado trocando a função `createConnection()` para `createConnections()` no plural
+- Para facilitar o início da imagem do mongodb, foram adicionados 3 npm scripts no `package.json`:
+
+```json
+    "run:mongo": "docker run --name mongodb -p 27017:27017 -d -t mongo",
+    "start:mongo": "docker start mongodb",
+    "stop:mongo": "docker stop mongodb",
+```
