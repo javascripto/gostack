@@ -6,4 +6,5 @@ interface IMailProvider {
 
 export default IMailProvider;
 
-// Mandrill / Sparkport / Mailgun / Amazon SES / SMTP / Sendgrid
+// Soluções de e-mail transacional:
+//  Mandrill / Sparkpost / Mailgun / Amazon SES / SMTP / Sendgrid / Mailchimp
