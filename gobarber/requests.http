@@ -44,7 +44,7 @@ Content-Type: {{contentType}}
 }
 
 ###
-# @name loginAPI2
+# @name loginAPI
 
 POST {{baseURL}}/sessions
 Content-Type: {{contentType}}
