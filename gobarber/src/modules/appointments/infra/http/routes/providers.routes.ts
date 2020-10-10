@@ -7,12 +7,12 @@ import ProviderMonthAvailabilityController from '../controllers/ProviderMonthAva
 import ProviderDayAvailabilityController from '../controllers/ProviderDayAvailabilityController';
 
 const providersRouter = Router();
-const appointmentsController = new ProvidersController();
+const providersController = new ProvidersController();
 const providerDayAvailabilityController = new ProviderDayAvailabilityController();
 const providerMonthAvailabilityController = new ProviderMonthAvailabilityController();
 
 providersRouter.use(ensureAuthenticated);
-providersRouter.get('/', appointmentsController.index);
+providersRouter.get('/', providersController.index);
 providersRouter.get('/:provider_id/day-availability', celebrate({
   [Segments.PARAMS]: {
     provider_id: Joi.string().uuid().required(),
