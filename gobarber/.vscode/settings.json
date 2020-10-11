@@ -3,5 +3,7 @@
     "source.fixAll.eslint": true,
     "source.organizeImports": false
   },
-  "workbench.colorTheme": "Dracula"
+  "workbench.colorTheme": "Dracula",
+  "javascript.suggest.autoImports": true,
+  "typescript.suggest.autoImports": true
 }
