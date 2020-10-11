@@ -10,7 +10,7 @@
     "start": "ts-node -r tsconfig-paths/register src/shared/infra/http/server.ts",
     "run:postgres": "docker run --name gostack_postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres",
     "start:postgres": "docker start gostack_postgres",
-    "stop:postgress": "docker stop gostack_postgres",
+    "stop:postgres": "docker stop gostack_postgres",
     "run:mongo": "docker run --name mongodb -p 27017:27017 -d -t mongo",
     "start:mongo": "docker start mongodb",
     "stop:mongo": "docker stop mongodb",
