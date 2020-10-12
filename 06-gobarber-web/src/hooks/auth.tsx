@@ -7,15 +7,25 @@ interface Credentials {
   password: string;
 }
 
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+  created_at: string;
+  updated_at: string;
+  avatar_url: string;
+}
+
 interface AuthContextData {
-  user: unknown;
+  user: User;
   signIn(credentials: Credentials): Promise<void>;
   signOut(): void;
 }
 
 interface AuthState {
   token: string;
-  user: unknown;
+  user: User;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
