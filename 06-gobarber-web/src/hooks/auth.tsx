@@ -7,7 +7,7 @@ interface Credentials {
   password: string;
 }
 
-interface User {
+export interface User {
   id: string;
   name: string;
   email: string;
@@ -35,6 +35,10 @@ const AuthProvider: React.FC = ({ children }) => {
     const token = localStorage.getItem('@GoBarber:token');
     const user = localStorage.getItem('@GoBarber:user');
 
+    if (token) {
+      api.defaults.headers.authorization = `Bearer ${token}`;
+    }
+
     return token && user
       ? { token, user: JSON.parse(user) }
       : ({} as AuthState);
@@ -46,6 +50,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
     localStorage.setItem('@GoBarber:token', token);
     localStorage.setItem('@GoBarber:user', JSON.stringify(user));
+
+    api.defaults.headers.authorization = `Bearer ${token}`;
 
     setData({ user, token });
   }, []);
