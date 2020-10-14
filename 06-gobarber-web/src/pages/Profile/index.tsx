@@ -16,7 +16,9 @@ import getValidationErrors from '../../utils/getValidationErrors';
 interface ProfileFormData {
   name: string;
   email: string;
+  old_password: string;
   password: string;
+  password_confirmation: string;
 }
 
 const Profile: React.FC = () => {
@@ -35,16 +37,39 @@ const Profile: React.FC = () => {
           email: Yup.string()
             .required('E-mail obrigatório')
             .email('Digite um e-mail válido'),
-          password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+          old_password: Yup.string().when('password_confirmation', {
+            is: value => value.length,
+            then: Yup.string().required('Senha antiga necessária'),
+            otherwise: Yup.string(),
+          }),
+          password: Yup.string().when('old_password', {
+            is: value => value.length,
+            then: Yup.string().min(6, 'Minimo 6 caracteres'),
+            otherwise: Yup.string().notRequired(),
+          }),
+          password_confirmation: Yup.string().oneOf(
+            [Yup.ref('password')],
+            'Confirmação incorreta',
+          ),
         });
 
         await schema.validate(data, { abortEarly: false });
-        await api.post('/users/', data);
-        history.push('/');
+
+        const formData = {
+          name: data.name,
+          email: data.email,
+          ...(data.password ? data : {}),
+        };
+
+        const response = await api.put('/profile', formData);
+        updateUser(response.data);
+        history.push('/dashboard');
+
         addToast({
           type: 'success',
-          title: 'Cadastro realizado',
-          description: 'Você já pode fazer seu logon no GoBarber',
+          title: 'Cadastro atualizado!',
+          description:
+            'Suas informaçÕes do perfil foram atualizadas com sucesso!',
         });
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -53,8 +78,8 @@ const Profile: React.FC = () => {
         }
         addToast({
           type: 'error',
-          title: 'Erro no cadastro',
-          description: 'Ocorreu um erro ao fazer cadastro, ente novamente',
+          title: 'Erro na atualização',
+          description: 'Ocorreu um erro ao atualizar perfil, tente novamente',
         });
       }
     },
