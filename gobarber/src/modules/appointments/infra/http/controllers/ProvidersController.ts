@@ -1,5 +1,6 @@
 import { container } from 'tsyringe';
 import { Request, Response } from 'express';
+import { classToClass } from 'class-transformer';
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import ListProvidersService from '@modules/appointments/services/ListProvidersService';
@@ -9,7 +10,7 @@ class ProvidersController {
     const user_id = request.user.id;
     const listProviders = container.resolve(ListProvidersService);
     const providers = await listProviders.execute({ user_id });
-    return response.json(providers);
+    return response.json(classToClass(providers));
   }
 }
 

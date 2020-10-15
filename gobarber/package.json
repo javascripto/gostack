@@ -17,6 +17,7 @@
     "run:redis": "docker run --name redis -p 6379:6379 -d -t redis:alpine",
     "start:redis": "docker start redis",
     "stop:redis": "docker stop redis",
+    "clear:cache": "echo flushall | redis-cli",
     "start:services": "yarn start:postgres; yarn start:mongo; yarn start:redis",
     "stop:services": "yarn stop:postgres; yarn stop:mongo; yarn stop:redis",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
