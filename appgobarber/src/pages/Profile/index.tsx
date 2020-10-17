@@ -44,7 +44,7 @@ const Profile = (): JSX.Element => {
   const passwordInputRef = useRef<TextInput>(null);
   const passwordConfirmationInputRef = useRef<TextInput>(null);
   const { goBack } = useNavigation();
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, signOut } = useAuth();
 
   const handleSubmit = useCallback(
     async (data: UpdateProfileFormData) => {
@@ -230,6 +230,7 @@ const Profile = (): JSX.Element => {
                 Confirmar mudanças
               </Button>
             </Form>
+            <Button onPress={signOut}>Desconectar</Button>
           </Container>
         </ScrollView>
       </KeyboardAvoidingView>
