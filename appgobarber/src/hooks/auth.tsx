@@ -29,6 +29,7 @@ interface AuthContextData {
   loading: boolean;
   signIn(credentials: Credentials): Promise<void>;
   signOut(): void;
+  updateUser(user: User): Promise<void>;
 }
 
 interface AuthState {
@@ -61,6 +62,20 @@ const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState);
   }, []);
 
+  const updateUser = useCallback(
+    async (updateData: User) => {
+      setData({
+        token: data.token,
+        user: {
+          ...data.user,
+          ...updateData,
+        },
+      });
+      await AsyncStorage.setItem('@GoBarber:user', JSON.stringify(updateData));
+    },
+    [data],
+  );
+
   useEffect(() => {
     async function loadStorageData() {
       const [[, token], [, user]] = await AsyncStorage.multiGet([
@@ -79,7 +94,9 @@ const AuthProvider: React.FC = ({ children }) => {
 
   const { user } = data;
   return (
-    <AuthContext.Provider value={{ user, signIn, signOut, loading }}>
+    <AuthContext.Provider
+      value={{ user, signIn, signOut, updateUser, loading }}
+    >
       {children}
     </AuthContext.Provider>
   );
