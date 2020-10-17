@@ -1,5 +1,5 @@
 import { useField } from '@unform/core';
-import { TextInputProps } from 'react-native';
+import { StyleProp, TextInputProps, TextStyle } from 'react-native';
 import React, {
   useRef,
   useEffect,
@@ -15,6 +15,7 @@ import { Container, TextInput, Icon } from './styles';
 interface InputProps extends TextInputProps {
   name: string;
   icon: string;
+  containerStyle?: StyleProp<TextStyle>;
 }
 
 interface InputValueReference {
@@ -27,7 +28,10 @@ interface InputRef {
 
 type InputWithRef = RefForwardingComponent<InputRef, InputProps>;
 
-const Input: InputWithRef = ({ name, icon, ...props }, ref) => {
+const Input: InputWithRef = (
+  { name, icon, containerStyle = {}, ...props },
+  ref,
+) => {
   const inputElementRef = useRef<any>(null);
   const { registerField, defaultValue = '', error, fieldName } = useField(name);
   const inputValueRef = useRef<InputValueReference>({ value: defaultValue });
@@ -67,7 +71,7 @@ const Input: InputWithRef = ({ name, icon, ...props }, ref) => {
   }, [fieldName, registerField]);
 
   return (
-    <Container isFocused={isFocused} hasError={!!error}>
+    <Container isFocused={isFocused} hasError={!!error} style={containerStyle}>
       <Icon
         name={icon}
         size={20}
