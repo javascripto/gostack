@@ -2,8 +2,9 @@ import * as Yup from 'yup';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import React, { useRef, useCallback } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
+import ImagePicker from 'react-native-image-picker';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   View,
@@ -99,6 +100,42 @@ const Profile = (): JSX.Element => {
     [goBack, updateUser],
   );
 
+  const handleUpdateAvatar = useCallback(() => {
+    ImagePicker.showImagePicker(
+      {
+        title: 'Selecione um avatar',
+        cancelButtonTitle: 'Cancelar',
+        takePhotoButtonTitle: 'Usar câmera',
+        chooseFromLibraryButtonTitle: 'Escolher da galeria',
+        allowsEditing: true,
+        maxHeight: 1000,
+        maxWidth: 1000,
+        quality: 0.7,
+      },
+      response => {
+        if (response.didCancel) {
+          return;
+        }
+        if (response.error) {
+          Alert.alert('Erro ao atualizar seu avatar');
+          return;
+        }
+        const formData = new FormData();
+
+        formData.append('avatar', {
+          uri: response.uri,
+          type: response.type,
+          name: response.fileName,
+          size: response.fileSize,
+        });
+
+        api.patch(`/users/avatar`, formData).then(({ data: userResponse }) => {
+          updateUser(userResponse);
+        });
+      },
+    );
+  }, [updateUser]);
+
   return (
     <>
       <KeyboardAvoidingView
@@ -111,7 +148,7 @@ const Profile = (): JSX.Element => {
             <BackButton onPress={goBack}>
               <Icon name="chevron-left" size={24} color="#999591" />
             </BackButton>
-            <UserAvatarButton onPress={() => {}}>
+            <UserAvatarButton onPress={handleUpdateAvatar}>
               <UserAvatar source={{ uri: user.avatar_url }} />
             </UserAvatarButton>
             <View>
