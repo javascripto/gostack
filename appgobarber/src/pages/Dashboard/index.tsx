@@ -48,7 +48,6 @@ const Dashboard: FC = () => {
 
   return (
     <Container>
-      <StatusBar backgroundColor="#28262e" />
       <Header>
         <HeaderTitle>
           Bem vindo,
