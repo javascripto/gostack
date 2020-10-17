@@ -60,7 +60,7 @@ const SignUp: FC = () => {
         }
         Alert.alert(
           'Erro no cadastro',
-          'Ocorreu um erro ao fazer cadastro, ente novamente',
+          'Ocorreu um erro ao fazer cadastro, tente novamente',
         );
       }
     },
