@@ -12,8 +12,6 @@ export interface User {
   name: string;
   email: string;
   avatar: string;
-  created_at: string;
-  updated_at: string;
   avatar_url: string;
 }
 
@@ -87,11 +85,7 @@ const AuthProvider: React.FC = ({ children }) => {
 };
 
 const useAuth = (): AuthContextData => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error(`useAuth must be used within an AuthProvider`);
-  }
-  return context;
+  return useContext(AuthContext);
 };
 
 export { AuthProvider, useAuth };
