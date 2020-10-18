@@ -42,9 +42,13 @@ class ListProviderDayAvailabilityService {
 
       const compareDate = new Date(year, month - 1, day, hour);
 
+      const [SUNDAY, SATURDAY] = [0, 6];
+
+      const isWeekend = [SUNDAY, SATURDAY].includes(compareDate.getDay());
+
       return {
         hour,
-        available: !hasAppointmentInHour && isAfter(compareDate, currentDate),
+        available: !hasAppointmentInHour && isAfter(compareDate, currentDate) && !isWeekend,
       };
     });
 
